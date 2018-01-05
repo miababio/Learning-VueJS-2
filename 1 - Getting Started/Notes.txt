@@ -1,0 +1,97 @@
+                                                        NOTES
+                                                        -----
+
+Let's Create Our First VueJS Application
+    - JSFiddle first to try it out
+    - In HTML
+        - <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+          <div id="app">
+            <p>{{ title }}</p>
+          </div>
+    - In JS
+        - new Vue({
+            el: '#app',
+            data: {
+                title: "Hello World!"
+            }
+        });
+            - new Vue({...}) gives us a new instance of Vue
+                - This is the core, the main application of using VueJS objects
+                - Each instance made is used to do one job-primarily use a template to control the HTML given on a page
+            - el: '#app'
+                - In the constructor, a Javascript object gets passed in, and a keyword property the Vue recognizes that we can use is "el"
+                - "el" let's us specify what part of out HTML we want to be controlled by this Vue instance
+                - When picking an element, you can select it as you would a CSS selector (# = id, . = class, etc.)
+            - data: {title: 'Hello World'}
+                - Now that we have control of the <div> and everything in it, we need to fill our template with data
+                - VueJS comes with another keyword for this called 'data'
+                - We use an object to specify all the data we want to use for this Vue instance
+    - Now that everything is set up, in the HTML we add our data to the <p> element by using the {{ <data_goes_here }} format
+        - Ex: <p>{{ title }}</p>  
+    - What happens is now VueJS will look at the data object we made earlier, see the 'title' property inside of it, and replace the code in the
+      'title' in the HTML file with the value in the data object (Hello World)
+        - So <p>{{ title }}</p> turns into <p>Hello World!</p>
+    - If you run this code, you should see "Hello World!" on the screen
+
+Extending the VueJS Application
+    - Now let's add an input field so that whatever a user types into the input field, that's what the title becomes
+    - This can be done by adding a command to the input, a command that VueJS can recognize and act on
+        - This is called a DIRECTIVE
+    - See Example 1
+        - In this case, we use the "v-on" command
+        - <input type="text" v-on:input 
+            - The "v-on" directive basically says, "Hey VueJS, listen for an event on this element
+                - What event? The one you specify
+            - Format <directive>:<argument>
+            - In this case -> v-on:input="changeTitle"
+            - :input means to listen on every keystroke and do whatever code you have in quotes in the value
+                - In this example, we want to call the changeTitle() method
+        - In our Vue constructor, like data, there is another keyword property VueJS has called 'methods'
+            - This is where we'll put all the mthods we want to use in our templates, as well as our VueJS instance
+        - changeTitle: function(event) {
+            this.title = event.target.value
+        }
+            - "this" refers to the data object we made before
+            - Behind the scenes, VueJS proxies all or data properties and puts it at the top of our Vue instance, making it accessible to "this"
+                - You also have access to all the methods with the "this" keyword as well (Ex: this.changeTitle)  
+            - In regular Javascript, these kind of things trigger an event, and VueJS is nice enough to pass this event as a argument for us
+            - You know the event has a target (which is the input field in this case), and that field has a value (hence event.target.value)
+
+
+
+
+
+
+                                            EXAMPLES
+                                            --------
+
+Example 1 - Extending The VueJS Application
+---------
+
+    HTML
+    ----
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <div id="app">
+    <input type="text" v-on:input="changeTitle">
+    <p>{{ title }}</p>
+    </div>
+
+    JS
+    --
+    new Vue({
+    el: "#app",
+    data: {
+        title: "Hello World!"
+    },
+    methods: {
+        changeTitle: function(event) {
+            this.title = event.target.value;
+        }
+    }
+    });
+
+
+Example 2 - 
+---------
+

@@ -1,0 +1,136 @@
+                                                        NOTES
+                                                        -----
+
+Understanding VueJS Templates
+    - Note: the "{{ }}" syntax is called Interpolation or String Interpolation
+    - When we create a Vue instance, it connects our code in Vue with our HTML code
+    - It's importnant to note that Vue at runtime does not use the HTML code or add its Vue commands to the HTML code
+        - You can see this if you inspect our "Hello World" code; it looks like this -> <p>Hello World!</p>
+            - It gives no indication of any Vue magic happening, no curly braces, etc.
+        - Process
+            - Vue creates a template based on our HTML code
+            - Vue then stores that internally
+            - Vue then uses that template to generate the real HTML code, which is then rendered as the DOM
+        - This is important becuase it shows us that between our html code and the browser, there is another layer (Vue) that takes
+          our code and converts the templates to html code before the real code is put into the browser. That's why we're able to use
+          templates the way we do
+
+How the VueJS Template Syntax and Instance Work Together  
+    - So doing what we did before, we were able to output the title in HTML through the title property in data
+    - In the HTML, we didn't have to type this.title or data.title; we could just reference title
+    - Vue gives us access to everything in the data object just like that
+        - This is important becuase we dont have to manualy save our Vue instance, or put in some variable or something
+        - Behind the scenes, we can access all properties in the data object automagically
+    -  It's not just the data object though - we have access to the methods object as well!
+        - See Example 1  // (displays Hello! in browser)
+        - When Vue renders our template, it will parse and call that method accordingly
+            - It has to be able to be converted to a string, meaning no objects or anything fancy; If the function can turn it to a string, you can call that function in the template
+
+Accessing Data in the Vue Instance
+    - In our sayHello method, normally if we wanted to instead return the title located in data, we couldn't do that-it wouldn't have access
+        - With Vue however, you can!
+        - Vue behind the scenes proxies the data and methods object, which allows us to do something like "return this.title"
+        - In the Javascript, if you're going to call a property, you DO need to use "this.<whatever>", while in the HTML you don't
+
+Binding to Attributes
+    - Let's say we wanted to display a link to Google's page after saying Hello
+        - In the JS
+            - data: {
+                title: "Hello World!",
+                link: "http://google.com"
+            } 
+        - In the HTML
+            - <p>{{ sayHello() }} - <a href="{{ link }}">Google</a></p>      
+
+    - What do you think happens?
+        - If you try running this in the browser, and try clicikng on the Google link, you get an error
+            - Looking at the address bar, you see "%7B%7B%20link%20%7D%7D"
+            - The <a></a> tag is trying to parse your link and it can't do it
+            - VueJS doesn't work like that; You CANNOT use the curly braces syntax inside ANY html elements/attributes  
+    - So what if you wanted to do this anyways? To dynamically bind the link?
+        - You can actually do this!
+        - We use a directive that comes with VueJS called "v-bind"
+            - This tells Vue to not treat this attribute like you would normally in html, but instead bind it to some data that exists w/in my Vue Instance
+            - Usage -> v-bind:<attribute_we_want_bound>
+                - See Example 2
+                    - NOTE: Once we use the v-bind directive, we're already in VueJS land; We don't need to use the curly brace syntax to get the like property. We can type link normally
+
+Understanding and Using Directives
+    - Directive: An instruction you place in your code
+    - Vue comes with some prebuilt directives already
+    - You generally pass arguments into directives by using a colon (Ex: v-bind:href=...)
+    - Directives allow you to dynamically bind data to html elements (which you normally couldn't do)
+
+Disable Re-Rendering with v-once
+    - 
+
+
+
+
+
+
+
+
+                                            EXAMPLES
+                                            --------
+
+Example 1 - Using the method Object
+---------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VueJS</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>    
+</head>
+<body>
+    <div id="app">
+        <p>{{ sayHello() }}</p>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                title: "Hello World!"
+            },
+            methods: {
+                sayHello: function() {
+                    return 'Hello!';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+Example 2 - Binding an Attribute
+---------
+<body>
+    <div id="app">
+        <p>{{ sayHello() }} - <a v-bind:href="link">Google</a></p>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                title: "Hello World!",
+                link: "http://google.com"
+            },
+            methods: {
+                sayHello: function() {
+                    return 'Hello!';
+                }
+            }
+        });
+    </script>
+</body>
+
+
+Example 3 -
+---------
+
