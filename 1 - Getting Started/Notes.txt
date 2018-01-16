@@ -47,7 +47,7 @@ Extending the VueJS Application
             - :input means to listen on every keystroke and do whatever code you have in quotes in the value
                 - In this example, we want to call the changeTitle() method
         - In our Vue constructor, like data, there is another keyword property VueJS has called 'methods'
-            - This is where we'll put all the mthods we want to use in our templates, as well as our VueJS instance
+            - This is where we'll put all the methods we want to use in our templates, as well as our VueJS instance
         - changeTitle: function(event) {
             this.title = event.target.value
         }
