@@ -62,8 +62,39 @@ Understanding and Using Directives
     - Directives allow you to dynamically bind data to html elements (which you normally couldn't do)
 
 Disable Re-Rendering with v-once
-    - 
+    - Let's enhance the app a little bit
 
+        - <div id="app">
+            <h1>{{ title }}</h1> // title = "Hello!"
+            <p>{{ sayHello() }} - <a v-bind:href="link">Google</a></p> // displays = "Hello! - Google" (Hello comes from title)
+        </div>
+
+        - data: {
+            title: "Hello World!",
+            link: "http://google.com"
+          },
+          methods: {
+          sayHello: function() {
+              this.title = 'Hello!';
+              return this.title;
+            }
+          }
+
+            - NOTE: Remember that ALL usages of "title" get re-rendered once the property changes!
+                - That's why both the <h1> and the <p> say "Hello!"  
+            - What happens if we wanted to have it so that "title" = the first value we set it to, instead of the overidden one?
+                - In other words, we want the h1 to be "Hello World!" while the second title text is "Hello! - Google"
+                - We can do this, with another Vue directive called "v-once"
+                    - When this is used on an element, it means that the element gets rendered only once
+                        - The value of the element does not get overriden, even if the property changes later on
+                    - Now we have
+                        - <div id="app">
+                            <h1 v-once>{{ title }}</h1> // displays = "Hello World!"
+                            <p>{{ sayHello() }} - <a v-bind:href="link">Google</a></p> // displays = "Hello! - Google"
+                          </div>
+
+How To Output Raw HTML
+    - 
 
 
 
