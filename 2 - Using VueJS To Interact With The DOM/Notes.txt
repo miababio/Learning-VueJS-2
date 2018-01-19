@@ -94,7 +94,35 @@ Disable Re-Rendering with v-once
                           </div>
 
 How To Output Raw HTML
-    - 
+    - Let's enhance the app even more
+    - In the data object, we now add -> finishedLink: '<a href="http://google.com">Google</a>'
+    - In the div, we add -> <p>{{ finishedLink }}</p>
+    - What do you think it'll look like when we run it?
+        - It displays <a href="http://google.com">Google</a> as text
+            - We don't see a rendered HTML element, instead we see it in text form
+            - This is the defualt behavior of VueJS, and this is a good thing!
+                - It escapes HTML, meaning it doesn't render HTML elements, only text
+                    - This ensures that we don't fall victim to something like Cross-Side Scripting attacks 
+                - Most of the time, this is what you want
+            - On the other hand, if you have HTML content, and you know where the source is coming from/you've sanitized the output, then there is a way to render
+              the HTML code as an HTML element, and not the text
+                - Ex: You have a blog post that let's you edit in it
+                - Instead of doing string interpolation {{ }} we can use another Vue directive -> v-html
+                    - This allows you to pass the property you want to use as html code
+                        - so <p>{{ finishedLink }}</p> now becomes -> <p v-html="finishedLink"></p>
+                    - NOTE: Remember that this DOES expose you to Cross-Side Scripting attacks, especially if it's being used where the user is entering information client-Side
+                        - You have no control what they enter, and they could inject anything they want
+
+Listening to Events
+    - We have a button and a counter, and want to hook it up so that when we click the button, the counter increases
+    - We'll use v-on
+        - Unlike how v-bind let's us bind to an element and then pass data to it, v-on does the reverse
+            - We bind to, or better yet, LISTEN to receive something from our template
+                - What do we listen for? An event!
+                    - The name of the event is then used as the argument for v-on (Ex: v-on:click)
+        - See Example 3
+
+Getting Event Data from the Event Object
 
 
 
@@ -162,6 +190,30 @@ Example 2 - Binding an Attribute
 </body>
 
 
-Example 3 -
+Example 3 - Listening for an Event
+---------
+<body>
+    <div id="app">
+        <button v-on:click="increase">Click Me!</button>
+        <p>{{ counter }}</p>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                counter: 0
+            },
+            methods: {
+                increase: function() {
+                    this.counter++;
+                }
+            }
+        });
+    </script>
+</body>
+
+
+Example 4 - 
 ---------
 
