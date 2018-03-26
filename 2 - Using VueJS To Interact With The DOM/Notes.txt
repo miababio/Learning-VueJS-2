@@ -82,11 +82,11 @@ Disable Re-Rendering with v-once
 
             - NOTE: Remember that ALL usages of "title" get re-rendered once the property changes!
                 - That's why both the <h1> and the <p> say "Hello!"  
-            - What happens if we wanted to have it so that "title" = the first value we set it to, instead of the overidden one?
+            - What happens if we wanted to have it so that "title" = the first value we set it to, instead of the overridden one?
                 - In other words, we want the h1 to be "Hello World!" while the second title text is "Hello! - Google"
                 - We can do this, with another Vue directive called "v-once"
                     - When this is used on an element, it means that the element gets rendered only once
-                        - The value of the element does not get overriden, even if the property changes later on
+                        - The value of the element does not get overridden, even if the property changes later on
                     - Now we have
                         - <div id="app">
                             <h1 v-once>{{ title }}</h1> // displays = "Hello World!"
@@ -100,7 +100,7 @@ How To Output Raw HTML
     - What do you think it'll look like when we run it?
         - It displays <a href="http://google.com">Google</a> as text
             - We don't see a rendered HTML element, instead we see it in text form
-            - This is the defualt behavior of VueJS, and this is a good thing!
+            - This is the default behavior of VueJS, and this is a good thing!
                 - It escapes HTML, meaning it doesn't render HTML elements, only text
                     - This ensures that we don't fall victim to something like Cross-Side Scripting attacks 
                 - Most of the time, this is what you want
