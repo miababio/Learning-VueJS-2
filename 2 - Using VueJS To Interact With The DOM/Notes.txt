@@ -123,6 +123,15 @@ Listening to Events
         - See Example 3
 
 Getting Event Data from the Event Object
+    - Say we wanted to access the properties of an object
+        - Ex: Click event -> contains coordinates, etc.
+    - Let's make an example where we want to display the mouse coordinates whenever we hover over a paragraph
+        - See Example 4
+            - Vue automatically passes in the $event object for us, so we don't need to manually call it in the template, by that I mean we don't have to type:
+                - <p v-on:mousemove="updateCoordinates($event)">Coordinates: {{ x }} / {{ y }}</p>
+
+Passing Your Own Arguments with Events
+    - 
 
 
 
@@ -214,6 +223,37 @@ Example 3 - Listening for an Event
 </body>
 
 
-Example 4 - 
+Example 4 - Getting properties from an Event
+---------
+<body>
+    <div id="app">
+        <button v-on:click="increase">Click Me!</button>
+        <p>{{ counter }}</p>
+        <p v-on:mousemove="updateCoordinates">Coordinates: {{ x }} / {{ y }}</p> // Mouse along here to see the magic!
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                counter: 0,
+                x: 0,
+                y: 0
+            },
+            methods: {
+                increase: function() {
+                    this.counter++;
+                },
+                updateCoordinates(event) {
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                }
+            }
+        });
+    </script>
+</body>
+
+
+Example 5 -
 ---------
 
