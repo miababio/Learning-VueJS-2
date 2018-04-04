@@ -131,6 +131,29 @@ Getting Event Data from the Event Object
                 - <p v-on:mousemove="updateCoordinates($event)">Coordinates: {{ x }} / {{ y }}</p>
 
 Passing Your Own Arguments with Events
+    - Ex: Pass a value into the increase() method so we can increase the counter by any value instead of just 1
+        - template -> <button v-on:click="increase(2)">Click Me!</button>
+        - method -> increase: function(step) {
+                    this.counter += step;
+                    }
+        - If you want to pass in an argument, as well as the default event argument that Vue provides, you need to name it "$event" in order for it to be recognized
+        - Pretty straightforward
+
+Modifying an Event - w/ Event Modifiers
+    - Let's enhance the program, such that if we mouse over the DEAD SPOT in the <p> tag, we don't update the coordinates
+    - We can do this by using a dummy method, and then using the stopPropagation() method from $event
+        - This makes it so that in the handler, the code that is being handled does not propagate up to the elements that are housing the one you are trying to handle
+        - See Example 5
+    - This works, but we can do better. Let's use an event modifier!
+    - Syntax -> Event.<event_modifier>
+        - Ex: v-on:mouseover.stop
+        - The .stop modifier is the same as doing stopPropagation()
+            - This is better because we don't need to make a dummy method anymore to handle the propagation
+    - The other modifier you'll commonly see is '.prevent', which is the same as calling event.preventDefault()
+    - Note: You can also chain modifiers if you want!
+        - Ex: <span v-on:mousemove.stop.prevent="">DEAD SPOT</span>
+
+Listening to Keyboard Events
     - 
 
 
@@ -254,6 +277,38 @@ Example 4 - Getting properties from an Event
 </body>
 
 
-Example 5 -
+Example 5 - stopPropagation() Example
 ---------
+<body>
+    <div id="app">
+        <button v-on:click="increase(2, $event)">Click Me!</button>
+        <p>{{ counter }}</p>
+        <p v-on:mousemove="updateCoordinates">
+            Coordinates: {{ x }} / {{ y }}
+            - <span v-on:mousemove="dummy">DEAD SPOT</span>
+        </p>
+    </div>
 
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                counter: 0,
+                x: 0,
+                y: 0
+            },
+            methods: {
+                increase: function(step, event) {
+                    this.counter += step;
+                },
+                updateCoordinates(event) {
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                },
+                dummy(event) {
+                    event.stopPropagation();
+                }
+            }
+        });
+    </script>
+</body>
