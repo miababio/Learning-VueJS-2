@@ -154,6 +154,19 @@ Modifying an Event - w/ Event Modifiers
         - Ex: <span v-on:mousemove.stop.prevent="">DEAD SPOT</span>
 
 Listening to Keyboard Events
+    - Just like how we have event modifiers, we also have Key Modifiers
+    - Ex: <input type="text" v-on:keyup="alertMe">
+          alertMe() {
+            alert('Alert');
+          }
+            - Problem: This can get pretty 'spammy'.
+                - An alert will show up every time you release a key
+            - To fix this, we can add a key modifier on the keyup event
+                - Syntax -> v-on:keyup.<NAME_OF_KEY>
+                - Ex: <input type="text" v-on:keyup.enter="alertMe">
+                    - Now this only listens to the "Enter" key
+
+Writing Javascript Code in the Templates
     - 
 
 
