@@ -167,6 +167,23 @@ Listening to Keyboard Events
                     - Now this only listens to the "Enter" key
 
 Writing Javascript Code in the Templates
+    - You can use single Javascript expression or ternary operations in the Vue templates if you want to
+        - Ex: <button v-on:click="counter++">Click Me!</button>
+
+Using Two-Way Binding
+    - "v-model" lets us update a field, while updating the data used in the field at the same time
+    - Ex: <input type="text" v-model="name">
+          ...
+          <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    name: 'Mike'
+                }
+            })
+          </script>
+
+Reacting to Changes with Computed Properties
     - 
 
 
